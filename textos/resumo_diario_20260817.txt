@@ -1,0 +1,32 @@
+==================================================================
+RELATÓRIO DIÁRIO — 17/08/2026
+Gerado em 15/08/2026 às 20:06
+==================================================================
+
+1) RESULTADOS DO DIA ANTERIOR (previsto x real)
+------------------------------------------------------------------
+   Dia de referência: 16/08/2026
+   Nenhum resultado divulgado nesse dia.
+
+2) RESULTADOS A SEREM DIVULGADOS HOJE (previsões)
+------------------------------------------------------------------
+   AMBP3.SA   Antes da abertura  Receita          R$ 3,00 | EBITDA          R$ 3,00 | Lucro          R$ 3,00 | LPA   3,0000
+   GFSA3.SA   Antes da abertura  Receita          R$ 9,00 | EBITDA          R$ 9,00 | Lucro          R$ 9,00 | LPA   9,0000
+   IFCM3.SA   Antes da abertura  Receita          R$ 7,00 | EBITDA          R$ 7,00 | Lucro          R$ 7,00 | LPA   7,0000
+   JBSS3.SA   Antes da abertura  Receita     R$ 31.000,00 | EBITDA      R$ 7.200,00 | Lucro      R$ 3.100,00 | LPA   1,9200
+   MEAL3.SA   Antes da abertura  Receita          R$ 5,00 | EBITDA          R$ 5,00 | Lucro          R$ 5,00 | LPA   5,0000
+   SEQL3.SA   Antes da abertura  Receita          R$ 1,00 | EBITDA          R$ 1,00 | Lucro          R$ 1,00 | LPA   1,0000
+   VALE3.SA   Antes da abertura  Receita     R$ 41.200,00 | EBITDA     R$ 15.800,00 | Lucro      R$ 9.100,00 | LPA   2,1200
+   AMAR3.SA   Após o fechamento  Receita          R$ 4,00 | EBITDA          R$ 4,00 | Lucro          R$ 4,00 | LPA   4,0000
+   ARND3.SA   Após o fechamento  Receita          R$ 6,00 | EBITDA          R$ 6,00 | Lucro          R$ 6,00 | LPA   6,0000
+   DMVF3.SA   Após o fechamento  Receita          R$ 2,00 | EBITDA          R$ 2,00 | Lucro          R$ 2,00 | LPA   2,0000
+   ECOM3.SA   Após o fechamento  Receita          R$ 8,00 | EBITDA          R$ 8,00 | Lucro          R$ 8,00 | LPA   8,0000
+   ITUB4.SA   Após o fechamento  Receita     R$ 38.900,00 | EBITDA     R$ 16.200,00 | Lucro      R$ 9.500,00 | LPA   1,0900
+   PETR4.SA   Após o fechamento  Receita    R$ 104.500,00 | EBITDA     R$ 40.200,00 | Lucro     R$ 24.100,00 | LPA   1,8500
+   TOKY3.SA   Após o fechamento  Receita         R$ 10,00 | EBITDA         R$ 10,00 | Lucro         R$ 10,00 | LPA  10,0000
+
+3) TELECONFERÊNCIAS DE HOJE
+------------------------------------------------------------------
+   14:00   IFCM3.SA   1T26
+
+==================================================================

@@ -28,6 +28,8 @@ MAPA_COLUNAS = {
 }
 
 MAX_LINHAS_POR_PAGINA = 12
+MAX_LINHAS_POR_PAGINA_MOBILE = 1
+NOME_CANAL = "7RD Investimentos"
 
 
 def encontrar_planilha():
@@ -211,6 +213,17 @@ def menu_tipo():
         [
             ("Relatório de Previsões x Reais", "prev"),
             ("Relatório de Teleconferências", "teleconf"),
+            ("Relatório diário em texto (ontem x hoje)", "diario"),
+        ],
+    )
+
+
+def menu_tela():
+    return menu_escolha(
+        "Para qual tela deseja gerar?",
+        [
+            ("Desktop (tela larga)", "desktop"),
+            ("Celular (tela estreita)", "celular"),
         ],
     )
 
@@ -234,6 +247,28 @@ def menu_datas_teleconf(por_teleconf):
         plural = "teleconferência" if n == 1 else "teleconferências"
         opcoes.append((f"{fmt_data(data)}  ({n} {plural})", data))
     return menu_escolha("Dias com teleconferência na planilha:", opcoes)
+
+
+def menu_dia_referencia(por_data, por_teleconf, colunas):
+    """Escolhe o DIA de referência (hoje); o relatório usa o dia anterior para os resultados."""
+    datas = sorted(set(list(por_data) + list(por_teleconf)))
+    opcoes = []
+    for data in datas:
+        detalhes = []
+        if data in por_data:
+            n = len(por_data[data])
+            rotulo = "resultados divulgados" if tem_resultado_real(por_data[data], colunas) else "previsões"
+            detalhes.append(f"{n} {rotulo}")
+        if data in por_teleconf:
+            n = len(por_teleconf[data])
+            plural = "teleconferência" if n == 1 else "teleconferências"
+            detalhes.append(f"{n} {plural}")
+        desc = fmt_data(data) + (" — " + ", ".join(detalhes) if detalhes else "")
+        opcoes.append((desc, data))
+    return menu_escolha(
+        "Qual é o DIA de referência (hoje)? O relatório usará o dia anterior para os resultados divulgados.",
+        opcoes,
+    )
 
 
 def css_estilo():
@@ -426,10 +461,55 @@ def css_estilo():
             letter-spacing: .06em;
         }
         @media (max-width: 760px) {
-            .masthead { flex-direction: column; text-align: center; padding: 36px 24px 30px; }
-            .mast-direita { order: -1; }
-            .logo { height: 96px; }
-            body { padding: 0 14px 30px; }
+            body { padding: 0 14px 30px; overflow-x: hidden; }
+            .masthead { flex-direction: column; text-align: center; padding: 22px 18px 20px; margin: 0 -14px 18px; }
+            .mast-direita { order: -1; padding: 8px; }
+            .logo { height: 56px; }
+            .mast-rotulo { font-size: 10px; margin-bottom: 8px; }
+            .mast-titulo { font-size: 22px; }
+            .mast-sub { font-size: 13px; margin: 10px auto 0; max-width: 92%; }
+            .badge { display: block; width: fit-content; margin: 10px auto 0; }
+            thead { display: none; }
+            tbody tr {
+                display: block;
+                margin: 0;
+                padding: 20px 18px;
+                background: linear-gradient(180deg, var(--panel-2), var(--panel));
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, .4), 0 2px 6px rgba(0, 0, 0, .3);
+            }
+            tbody td { border-top: none; }
+            tbody td + td { border-top: 1px solid var(--border-soft); }
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 18px;
+                padding: 13px 0;
+                text-align: right;
+                white-space: nowrap;
+                font-size: 15.5px;
+            }
+            tbody td::before {
+                content: attr(data-label);
+                color: var(--muted);
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .08em;
+                text-transform: uppercase;
+                text-align: left;
+            }
+            td.empresa {
+                display: block;
+                text-align: left;
+                font-size: 21px;
+                padding: 0 0 14px;
+            }
+            td.empresa::before { display: none; }
+            .gp { border-left: none; }
+            tr:hover td { background: none; }
+            .rodape { flex-direction: column; gap: 6px; align-items: flex-start; }
         }
         @media print {
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -553,7 +633,7 @@ def gerar_png(caminho_html, largura=1280, escala=2.0, pasta_png=None):
     return caminho_png
 
 
-def gerar_html(datas_linhas, colunas, caminho_saida):
+def gerar_html(datas_linhas, colunas, caminho_saida, mobile=False):
     data, linhas = datas_linhas
     tem_real = tem_resultado_real(linhas, colunas)
     periodo = periodo_de(linhas, colunas)
@@ -590,27 +670,27 @@ def gerar_html(datas_linhas, colunas, caminho_saida):
         if com_real:
             cols = [
                 f'<td class="empresa">{empresa}</td>',
-                f'<td class="gp">{fmt_brl(receita_prev)}</td>',
-                f"<td>{fmt_brl(receita_real)}</td>",
-                f"<td>{var_html(receita_prev, receita_real)}</td>",
-                f'<td class="gp">{fmt_brl(ebitda_prev)}</td>',
-                f"<td>{fmt_brl(ebitda_real)}</td>",
-                f"<td>{var_html(ebitda_prev, ebitda_real)}</td>",
-                f'<td class="gp">{fmt_brl(lucro_prev)}</td>',
-                f"<td>{fmt_brl(lucro_real)}</td>",
-                f"<td>{var_html(lucro_prev, lucro_real)}</td>",
-                f'<td class="gp">{fmt_num(lpa_prev, casas=4)}</td>',
-                f"<td>{fmt_num(lpa_real, casas=4)}</td>",
-                f"<td>{var_html(lpa_prev, lpa_real)}</td>",
+                f'<td class="gp" data-label="Receita prevista">{fmt_brl(receita_prev)}</td>',
+                f'<td data-label="Receita real">{fmt_brl(receita_real)}</td>',
+                f'<td data-label="Var. receita">{var_html(receita_prev, receita_real)}</td>',
+                f'<td class="gp" data-label="EBITDA previsto">{fmt_brl(ebitda_prev)}</td>',
+                f'<td data-label="EBITDA real">{fmt_brl(ebitda_real)}</td>',
+                f'<td data-label="Var. EBITDA">{var_html(ebitda_prev, ebitda_real)}</td>',
+                f'<td class="gp" data-label="Lucro previsto">{fmt_brl(lucro_prev)}</td>',
+                f'<td data-label="Lucro real">{fmt_brl(lucro_real)}</td>',
+                f'<td data-label="Var. lucro">{var_html(lucro_prev, lucro_real)}</td>',
+                f'<td class="gp" data-label="LPA previsto">{fmt_num(lpa_prev, casas=4)}</td>',
+                f'<td data-label="LPA real">{fmt_num(lpa_real, casas=4)}</td>',
+                f'<td data-label="Var. LPA">{var_html(lpa_prev, lpa_real)}</td>',
             ]
             return "<tr>" + "".join(cols) + "</tr>"
         cols = [
             f'<td class="empresa">{empresa}</td>',
-            f"<td>{fmt_lancamento(obter(row, colunas, 'lancamento'))}</td>",
-            f'<td class="gp">{fmt_brl(receita_prev)}</td>',
-            f'<td class="gp">{fmt_brl(ebitda_prev)}</td>',
-            f'<td class="gp">{fmt_brl(lucro_prev)}</td>',
-            f'<td class="gp">{fmt_num(lpa_prev, casas=4)}</td>',
+            f'<td data-label="Lançamento">{fmt_lancamento(obter(row, colunas, "lancamento"))}</td>',
+            f'<td class="gp" data-label="Receita prevista">{fmt_brl(receita_prev)}</td>',
+            f'<td class="gp" data-label="EBITDA previsto">{fmt_brl(ebitda_prev)}</td>',
+            f'<td class="gp" data-label="Lucro previsto">{fmt_brl(lucro_prev)}</td>',
+            f'<td class="gp" data-label="LPA previsto">{fmt_num(lpa_prev, casas=4)}</td>',
         ]
         return "<tr>" + "".join(cols) + "</tr>"
 
@@ -656,28 +736,29 @@ def gerar_html(datas_linhas, colunas, caminho_saida):
     titulo = f"Relatório de Previsões x Reais — {periodo} ({fmt_data(data)}){badge}"
     rodape = f"Gerado em {datetime.now().strftime('%d/%m/%Y às %H:%M')} · {len(linhas)} empresa(s)"
     return _escrever_paginas(
-        caminho_saida, titulo, nota, thead, [linha_empresa(r, tem_real) for r in linhas_ord], rodape
+        caminho_saida, titulo, nota, thead, [linha_empresa(r, tem_real) for r in linhas_ord], rodape,
+        max_linhas=MAX_LINHAS_POR_PAGINA_MOBILE if mobile else MAX_LINHAS_POR_PAGINA,
     )
 
 
-def _escrever_paginas(caminho_saida, titulo, subtitulo, thead, linhas_html, rodape, etiqueta=""):
+def _escrever_paginas(caminho_saida, titulo, subtitulo, thead, linhas_html, rodape, etiqueta="", max_linhas=MAX_LINHAS_POR_PAGINA):
     """Escreve o relatório paginado e devolve a lista de arquivos HTML gerados."""
     base, ext = os.path.splitext(caminho_saida)
     paginas = []
-    total = max(1, -(-len(linhas_html) // MAX_LINHAS_POR_PAGINA))
+    total = max(1, -(-len(linhas_html) // max_linhas))
     for i in range(total):
         if total == 1:
             saida = caminho_saida
         else:
             saida = f"{base}_p{i + 1:02d}{ext}"
-        bloco = linhas_html[i * MAX_LINHAS_POR_PAGINA:(i + 1) * MAX_LINHAS_POR_PAGINA]
+        bloco = linhas_html[i * max_linhas:(i + 1) * max_linhas]
         pag_rodape = rodape if total == 1 else f"{rodape} · Página {i + 1} de {total}"
         escrever_html(saida, titulo, subtitulo, thead, "".join(bloco), pag_rodape, etiqueta=etiqueta)
         paginas.append(saida)
     return paginas
 
 
-def gerar_html_teleconf(data_teleconf, linhas, colunas, caminho_saida):
+def gerar_html_teleconf(data_teleconf, linhas, colunas, caminho_saida, mobile=False):
     linhas_ord = sorted(linhas, key=lambda r: obter(r, colunas, "teleconf"))
 
     def linha(row):
@@ -686,8 +767,8 @@ def gerar_html_teleconf(data_teleconf, linhas, colunas, caminho_saida):
         return (
             "<tr>"
             f'<td class="empresa">{obter(row, colunas, "empresa")}</td>'
-            f"<td>{periodo_de([row], colunas)}</td>"
-            f"<td>{hora}</td>"
+            f'<td data-label="Balanço">{periodo_de([row], colunas)}</td>'
+            f'<td data-label="Horário">{hora}</td>'
             "</tr>"
         )
 
@@ -704,8 +785,149 @@ def gerar_html_teleconf(data_teleconf, linhas, colunas, caminho_saida):
     nota = "Agenda de teleconferências das empresas nesta data, em ordem de horário."
     rodape = f"Gerado em {datetime.now().strftime('%d/%m/%Y às %H:%M')} · {len(linhas)} empresa(s)"
     return _escrever_paginas(
-        caminho_saida, titulo, nota, thead, [linha(r) for r in linhas_ord], rodape, etiqueta="AGENDA CORPORATIVA"
+        caminho_saida, titulo, nota, thead, [linha(r) for r in linhas_ord], rodape, etiqueta="AGENDA CORPORATIVA",
+        max_linhas=MAX_LINHAS_POR_PAGINA_MOBILE if mobile else MAX_LINHAS_POR_PAGINA,
     )
+
+
+def ticker_curto(empresa):
+    texto = str(empresa or "").strip()
+    if texto.upper().endswith(".SA"):
+        return texto[:-3]
+    return texto
+
+
+def texto_lancamento(valor):
+    grupo = grupo_lancamento(valor)
+    if grupo == 0:
+        return "Antes da abertura"
+    if grupo == 1:
+        return "Após o fechamento"
+    return "—"
+
+
+def fmt_compacto(valor):
+    """Valores em BRL compacto: R$ X,XXB (≥1 bi), R$ X,XXM (≥1 mi) ou valor cheio."""
+    if valor is None:
+        return "—"
+    try:
+        v = float(valor)
+    except (TypeError, ValueError):
+        return "—"
+    sinal = "-" if v < 0 else ""
+    abs_v = abs(v)
+    if abs_v >= 1e9:
+        return f"{sinal}R$ {fmt_num(abs_v / 1e9, casas=2)}B"
+    if abs_v >= 1e6:
+        return f"{sinal}R$ {fmt_num(abs_v / 1e6, casas=2)}M"
+    return f"{sinal}R$ {fmt_num(abs_v, casas=2)}"
+
+
+def fmt_lpa(valor):
+    """LPA com 2 a 4 casas, sem zeros à direita (0,1903 / 0,24 / 1,00)."""
+    s = fmt_num(valor, casas=4)
+    if s == "—":
+        return s
+    sinal = "-" if s.startswith("-") else ""
+    corpo = s.lstrip("-")
+    inteiro, _, dec = corpo.partition(",")
+    dec = dec.rstrip("0")
+    while len(dec) < 2:
+        dec += "0"
+    return f"{sinal}{inteiro},{dec}"
+
+
+def bola_surpresa(real, prev):
+    """🟢 real > previsto; 🔴 real < previsto; 🟡 igual (funciona com negativos)."""
+    if real is None or prev is None:
+        return ""
+    try:
+        r = float(real)
+        p = float(prev)
+    except (TypeError, ValueError):
+        return ""
+    if r == p:
+        return " 🟡"
+    return " 🟢" if r > p else " 🔴"
+
+
+def gerar_texto_diario(data_dia, por_data, por_teleconf, colunas):
+    """Relatório diário em texto no estilo WhatsApp: ontem x expectativa, previsões de hoje, agenda e teleconferências."""
+    datas = sorted(set(list(por_data) + list(por_teleconf)))
+    try:
+        idx = datas.index(data_dia)
+    except ValueError:
+        idx = 0
+    data_ant = datas[idx - 1] if idx >= 1 else None
+
+    L = []
+    L.append("📊 " + NOME_CANAL)
+    L.append("")
+
+    # 1) Resultados de ontem x expectativas do mercado
+    if data_ant is None:
+        L.append("📅 Resultados divulgados ontem — sem dia anterior na planilha.")
+    else:
+        L.append(f"📅 Resultados divulgados ontem ({fmt_data(data_ant)}) X Expectativas do Mercado")
+        L.append("")
+        linhas = [r for r in por_data.get(data_ant, []) if tem_resultado_real([r], colunas)]
+        if not linhas:
+            L.append("Nenhum resultado divulgado nesse dia.")
+        else:
+            linhas.sort(key=lambda r: str(obter(r, colunas, "empresa")).lower())
+            for r in linhas:
+                L.append(ticker_curto(obter(r, colunas, "empresa")))
+                for nome_prev, nome_real, rotulo in (
+                    ("receita_prev", "receita_real", "Receita"),
+                    ("ebitda_prev", "ebitda_real", "EBITDA"),
+                    ("lucro_prev", "lucro_real", "Lucro"),
+                    ("lpa_prev", "lpa_real", "Lucro por ação"),
+                ):
+                    prev = obter(r, colunas, nome_prev)
+                    real = obter(r, colunas, nome_real)
+                    if rotulo == "Lucro por ação":
+                        pv, rv = fmt_lpa(prev), fmt_lpa(real)
+                    else:
+                        pv, rv = fmt_compacto(prev), fmt_compacto(real)
+                    L.append(f"• {rotulo}: {rv}. Expectativa: {pv}{bola_surpresa(real, prev)}")
+                L.append("")
+
+    # 2) Expectativas para os balanços de hoje
+    L.append(f"📅 Expectativas de mercado para os resultados divulgados hoje - {fmt_data(data_dia)}")
+    L.append("")
+    linhas = por_data.get(data_dia, [])
+    if not linhas:
+        L.append("Nenhum balanço previsto para hoje na planilha.")
+    else:
+        linhas.sort(key=lambda r: (grupo_lancamento(obter(r, colunas, "lancamento")), str(obter(r, colunas, "empresa")).lower()))
+        for r in linhas:
+            emp = ticker_curto(obter(r, colunas, "empresa"))
+            lanc = texto_lancamento(obter(r, colunas, "lancamento"))
+            L.append(f"{emp} ({lanc})")
+            for nome_prev, rotulo in (
+                ("receita_prev", "Receita"),
+                ("ebitda_prev", "EBITDA"),
+                ("lucro_prev", "Lucro"),
+                ("lpa_prev", "Lucro por ação"),
+            ):
+                valor = obter(r, colunas, nome_prev)
+                vs = fmt_lpa(valor) if rotulo == "Lucro por ação" else fmt_compacto(valor)
+                L.append(f"• {rotulo} (expectativa): {vs}")
+            L.append("")
+
+    tc = por_teleconf.get(data_dia, [])
+    if tc:
+        L.append("🎙️ *Teleconferências de Resultados:*")
+        tc.sort(key=lambda r: str(obter(r, colunas, "teleconf")))
+        for r in tc:
+            val = obter(r, colunas, "teleconf")
+            hora = val.strftime("%H:%M") if isinstance(val, datetime) else "—"
+            emp = ticker_curto(obter(r, colunas, "empresa"))
+            L.append(f"• *{hora}* - *{emp}*")
+
+    while L and L[-1] == "":
+        L.pop()
+    return "\n".join(L)
 
 
 def main():
@@ -732,15 +954,38 @@ def main():
     os.makedirs(dir_img, exist_ok=True)
     tipo = menu_tipo()
 
+    if tipo == "diario":
+        data = menu_dia_referencia(por_data, por_teleconf, colunas)
+        texto = gerar_texto_diario(data, por_data, por_teleconf, colunas)
+        dir_texto = os.path.join(base, "textos")
+        os.makedirs(dir_texto, exist_ok=True)
+        saida = os.path.join(dir_texto, f"resumo_diario_{data.strftime('%Y%m%d')}.txt")
+        with open(saida, "w", encoding="utf-8") as f:
+            f.write(texto)
+        print()
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+        print(texto)
+        print(f"\nArquivo salvo: {saida}")
+        return
+
+    tela = menu_tela()
+    mobile = tela == "celular"
+    sufixo = "_mobile" if mobile else ""
+    print("Gerando versão para celular (1170px, 1 empresa/página)..." if mobile
+          else "Gerando versão para desktop (2560px, 12 empresas/página)...")
+
     if tipo == "teleconf":
         if not por_teleconf:
             print("Nenhuma data de teleconferência encontrada na planilha.")
             sys.exit(1)
         data = menu_datas_teleconf(por_teleconf)
         linhas = por_teleconf[data]
-        nome = f"teleconferencias_{data.strftime('%Y%m%d')}.html"
+        nome = f"teleconferencias_{data.strftime('%Y%m%d')}{sufixo}.html"
         saida = os.path.join(dir_html, nome)
-        paginas = gerar_html_teleconf(data, linhas, colunas, saida)
+        paginas = gerar_html_teleconf(data, linhas, colunas, saida, mobile=mobile)
     else:
         if not por_data:
             print("Nenhuma data de balanço encontrada na planilha.")
@@ -748,13 +993,13 @@ def main():
         data = menu_datas(por_data, colunas)
         linhas = por_data[data]
         periodo = periodo_de(linhas, colunas)
-        nome = f"relatorio_{periodo}_{data.strftime('%Y%m%d')}.html"
+        nome = f"relatorio_{periodo}_{data.strftime('%Y%m%d')}{sufixo}.html"
         saida = os.path.join(dir_html, nome)
-        paginas = gerar_html((data, linhas), colunas, saida)
+        paginas = gerar_html((data, linhas), colunas, saida, mobile=mobile)
 
     pngs = []
     for i, pagina in enumerate(paginas, start=1):
-        png = gerar_png(pagina, pasta_png=dir_img)
+        png = gerar_png(pagina, pasta_png=dir_img, largura=390 if mobile else 1280, escala=3.0 if mobile else 2.0)
         if png:
             pngs.append(png)
             print(f"Imagem {i} de {len(paginas)}: {png}")

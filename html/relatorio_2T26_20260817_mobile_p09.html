@@ -196,20 +196,21 @@
         }
         @media (max-width: 760px) {
             body { padding: 0 14px 30px; overflow-x: hidden; }
-            .masthead { flex-direction: column; text-align: center; padding: 36px 24px 30px; margin: 0 -14px 24px; }
-            .mast-direita { order: -1; }
-            .logo { height: 96px; }
-            .mast-titulo { font-size: 26px; }
-            .mast-sub { font-size: 12.5px; }
+            .masthead { flex-direction: column; text-align: center; padding: 22px 18px 20px; margin: 0 -14px 18px; }
+            .mast-direita { order: -1; padding: 8px; }
+            .logo { height: 56px; }
+            .mast-rotulo { font-size: 10px; margin-bottom: 8px; }
+            .mast-titulo { font-size: 22px; }
+            .mast-sub { font-size: 13px; margin: 10px auto 0; max-width: 92%; }
             .badge { display: block; width: fit-content; margin: 10px auto 0; }
             thead { display: none; }
             tbody tr {
                 display: block;
-                margin: 0 0 16px;
-                padding: 14px 16px;
+                margin: 0;
+                padding: 20px 18px;
                 background: linear-gradient(180deg, var(--panel-2), var(--panel));
                 border: 1px solid var(--border);
-                border-radius: 16px;
+                border-radius: 18px;
                 box-shadow: 0 12px 30px rgba(0, 0, 0, .4), 0 2px 6px rgba(0, 0, 0, .3);
             }
             tbody td { border-top: none; }
@@ -219,14 +220,15 @@
                 justify-content: space-between;
                 align-items: center;
                 gap: 18px;
-                padding: 9px 0;
+                padding: 13px 0;
                 text-align: right;
                 white-space: nowrap;
+                font-size: 15.5px;
             }
             tbody td::before {
                 content: attr(data-label);
                 color: var(--muted);
-                font-size: 10px;
+                font-size: 12px;
                 font-weight: 600;
                 letter-spacing: .08em;
                 text-transform: uppercase;
@@ -235,8 +237,8 @@
             td.empresa {
                 display: block;
                 text-align: left;
-                font-size: 16px;
-                padding: 0 0 10px;
+                font-size: 21px;
+                padding: 0 0 14px;
             }
             td.empresa::before { display: none; }
             .gp { border-left: none; }
@@ -276,11 +278,11 @@
             </thead>
         
         <tbody>
-            <tr><td class="empresa">AMAR3.SA</td><td class="gp" data-label="Receita prevista">R$ 4,00</td><td data-label="Receita real">R$ 4,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 4,00</td><td data-label="EBITDA real">R$ 4,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 4,00</td><td data-label="Lucro real">R$ 4,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">4,0000</td><td data-label="LPA real">4,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">AMBP3.SA</td><td class="gp" data-label="Receita prevista">R$ 3,00</td><td data-label="Receita real">R$ 3,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 3,00</td><td data-label="EBITDA real">R$ 3,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 3,00</td><td data-label="Lucro real">R$ 3,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">3,0000</td><td data-label="LPA real">3,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ARND3.SA</td><td class="gp" data-label="Receita prevista">R$ 6,00</td><td data-label="Receita real">R$ 6,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 6,00</td><td data-label="EBITDA real">R$ 6,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 6,00</td><td data-label="Lucro real">R$ 6,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">6,0000</td><td data-label="LPA real">6,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">DMVF3.SA</td><td class="gp" data-label="Receita prevista">R$ 2,00</td><td data-label="Receita real">R$ 2,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 2,00</td><td data-label="EBITDA real">R$ 2,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 2,00</td><td data-label="Lucro real">R$ 2,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">2,0000</td><td data-label="LPA real">2,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ECOM3.SA</td><td class="gp" data-label="Receita prevista">R$ 8,00</td><td data-label="Receita real">R$ 8,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 8,00</td><td data-label="EBITDA real">R$ 8,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 8,00</td><td data-label="Lucro real">R$ 8,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">8,0000</td><td data-label="LPA real">8,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">GFSA3.SA</td><td class="gp" data-label="Receita prevista">R$ 9,00</td><td data-label="Receita real">R$ 9,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 9,00</td><td data-label="EBITDA real">R$ 9,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 9,00</td><td data-label="Lucro real">R$ 9,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">9,0000</td><td data-label="LPA real">9,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">IFCM3.SA</td><td class="gp" data-label="Receita prevista">R$ 7,00</td><td data-label="Receita real">R$ 7,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 7,00</td><td data-label="EBITDA real">R$ 7,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 7,00</td><td data-label="Lucro real">R$ 7,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">7,0000</td><td data-label="LPA real">7,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ITUB4.SA</td><td class="gp" data-label="Receita prevista">R$ 38.900,00</td><td data-label="Receita real">R$ 41.200,00</td><td data-label="Var. receita"><span class="pos">+5,91%</span></td><td class="gp" data-label="EBITDA previsto">R$ 16.200,00</td><td data-label="EBITDA real">R$ 17.100,00</td><td data-label="Var. EBITDA"><span class="pos">+5,56%</span></td><td class="gp" data-label="Lucro previsto">R$ 9.500,00</td><td data-label="Lucro real">R$ 10.300,00</td><td data-label="Var. lucro"><span class="pos">+8,42%</span></td><td class="gp" data-label="LPA previsto">1,0900</td><td data-label="LPA real">1,1800</td><td data-label="Var. LPA"><span class="pos">+8,26%</span></td></tr><tr><td class="empresa">JBSS3.SA</td><td class="gp" data-label="Receita prevista">R$ 31.000,00</td><td data-label="Receita real">R$ 32.450,00</td><td data-label="Var. receita"><span class="pos">+4,68%</span></td><td class="gp" data-label="EBITDA previsto">R$ 7.200,00</td><td data-label="EBITDA real">R$ 7.410,00</td><td data-label="Var. EBITDA"><span class="pos">+2,92%</span></td><td class="gp" data-label="Lucro previsto">R$ 3.100,00</td><td data-label="Lucro real">R$ 3.340,00</td><td data-label="Var. lucro"><span class="pos">+7,74%</span></td><td class="gp" data-label="LPA previsto">1,9200</td><td data-label="LPA real">2,0600</td><td data-label="Var. LPA"><span class="pos">+7,29%</span></td></tr><tr><td class="empresa">MEAL3.SA</td><td class="gp" data-label="Receita prevista">R$ 5,00</td><td data-label="Receita real">R$ 5,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 5,00</td><td data-label="EBITDA real">R$ 5,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 5,00</td><td data-label="Lucro real">R$ 5,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">5,0000</td><td data-label="LPA real">5,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">PETR4.SA</td><td class="gp" data-label="Receita prevista">R$ 104.500,00</td><td data-label="Receita real">R$ 98.600,00</td><td data-label="Var. receita"><span class="neg">-5,65%</span></td><td class="gp" data-label="EBITDA previsto">R$ 40.200,00</td><td data-label="EBITDA real">R$ 38.900,00</td><td data-label="Var. EBITDA"><span class="neg">-3,23%</span></td><td class="gp" data-label="Lucro previsto">R$ 24.100,00</td><td data-label="Lucro real">R$ 22.950,00</td><td data-label="Var. lucro"><span class="neg">-4,77%</span></td><td class="gp" data-label="LPA previsto">1,8500</td><td data-label="LPA real">1,7600</td><td data-label="Var. LPA"><span class="neg">-4,86%</span></td></tr><tr><td class="empresa">SEQL3.SA</td><td class="gp" data-label="Receita prevista">R$ 1,00</td><td data-label="Receita real">R$ 1,00</td><td data-label="Var. receita"><span class="neutro">0,00%</span></td><td class="gp" data-label="EBITDA previsto">R$ 1,00</td><td data-label="EBITDA real">R$ 1,00</td><td data-label="Var. EBITDA"><span class="neutro">0,00%</span></td><td class="gp" data-label="Lucro previsto">R$ 1,00</td><td data-label="Lucro real">R$ 1,00</td><td data-label="Var. lucro"><span class="neutro">0,00%</span></td><td class="gp" data-label="LPA previsto">1,0000</td><td data-label="LPA real">1,0000</td><td data-label="Var. LPA"><span class="neutro">0,00%</span></td></tr>
+            <tr><td class="empresa">JBSS3.SA</td><td class="gp" data-label="Receita prevista">R$ 31.000,00</td><td data-label="Receita real">R$ 32.450,00</td><td data-label="Var. receita"><span class="pos">+4,68%</span></td><td class="gp" data-label="EBITDA previsto">R$ 7.200,00</td><td data-label="EBITDA real">R$ 7.410,00</td><td data-label="Var. EBITDA"><span class="pos">+2,92%</span></td><td class="gp" data-label="Lucro previsto">R$ 3.100,00</td><td data-label="Lucro real">R$ 3.340,00</td><td data-label="Var. lucro"><span class="pos">+7,74%</span></td><td class="gp" data-label="LPA previsto">1,9200</td><td data-label="LPA real">2,0600</td><td data-label="Var. LPA"><span class="pos">+7,29%</span></td></tr>
         </tbody>
     </table>
     <p class="rodape">
-        <span>Gerado em 15/08/2026 às 19:38 · 14 empresa(s) · Página 1 de 2</span>
+        <span>Gerado em 15/08/2026 às 19:45 · 14 empresa(s) · Página 9 de 14</span>
     </p>
 </body>
 </html>
