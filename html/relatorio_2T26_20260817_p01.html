@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Relatório de Previsões x Reais — 2T26 (17/08/2026)<span class="badge badge-real">Resultados divulgados</span></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+        :root {
+            --bg: #0B0E11;
+            --panel: #12171C;
+            --panel-2: #161D23;
+            --border: #222A31;
+            --border-soft: #1A2128;
+            --accent: #4EA98B;
+            --accent-claro: #6FC79E;
+            --accent-mint: #60A080;
+            --teal: #208060;
+            --texto: #E9EDF0;
+            --muted: #8B959E;
+            --pos: #46C28A;
+            --neg: #E06A7E;
+            --ambra: #E3C46F;
+            --logo-fundo: #292929;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0 32px 44px;
+            min-height: 100vh;
+            background:
+                radial-gradient(1100px 520px at 88% -8%, rgba(96, 160, 128, .10), transparent 60%),
+                radial-gradient(900px 440px at -8% 0%, rgba(96, 160, 128, .06), transparent 55%),
+                var(--bg);
+            color: var(--texto);
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        ::selection { background: rgba(96, 160, 128, .35); color: #fff; }
+        .masthead {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 44px;
+            margin: 0 -32px 30px;
+            padding: 46px 56px 38px;
+            background: linear-gradient(180deg, #0E1419 0%, var(--bg) 100%);
+            border-top: 1px solid rgba(96, 160, 128, .35);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .masthead::before {
+            content: "";
+            position: absolute;
+            left: 56px;
+            top: -1px;
+            width: 90px;
+            height: 1px;
+            background: rgba(96, 160, 128, .8);
+        }
+        .masthead::after {
+            content: "";
+            position: absolute;
+            left: 56px;
+            right: 56px;
+            bottom: -1px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(96, 160, 128, .6), transparent);
+        }
+        .mast-rotulo {
+            margin: 0 0 12px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: var(--accent-claro);
+        }
+        .mast-titulo {
+            margin: 0;
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            font-size: 34px;
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: .01em;
+            color: var(--texto);
+        }
+        .mast-sub {
+            margin: 14px 0 0;
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 13.5px;
+        }
+        .mast-direita {
+            flex-shrink: 0;
+            padding: 12px;
+            background: var(--logo-fundo);
+            border: 1px solid rgba(96, 160, 128, .45);
+            border-radius: 20px;
+            box-shadow:
+                0 16px 38px rgba(0, 0, 0, .5),
+                0 2px 8px rgba(0, 0, 0, .35),
+                inset 0 0 0 1px rgba(255, 255, 255, .04);
+        }
+        .mast-direita .mast-sub { text-align: right; }
+        .logo {
+            display: block;
+            height: 118px;
+            width: auto;
+            border-radius: 12px;
+        }
+        .badge {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 16px;
+            padding: 5px 15px;
+            border-radius: 999px;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+        .badge-real {
+            color: var(--pos);
+            background: rgba(70, 194, 138, .10);
+            border-color: rgba(70, 194, 138, .28);
+        }
+        .badge-prev {
+            color: var(--ambra);
+            background: rgba(201, 162, 39, .10);
+            border-color: rgba(201, 162, 39, .30);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(180deg, var(--panel-2), var(--panel));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 20px 54px rgba(0, 0, 0, .48), 0 2px 6px rgba(0, 0, 0, .32);
+            font-size: 13px;
+        }
+        thead th {
+            background: #0D1217;
+            color: var(--muted);
+            padding: 13px 14px;
+            text-align: right;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+        }
+        thead th.grupo {
+            background: #101720;
+            color: var(--accent-claro);
+            text-align: center;
+            letter-spacing: .16em;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+        thead th.rotulo {
+            text-align: left;
+            color: var(--texto);
+        }
+        tbody td {
+            padding: 11px 14px;
+            border-top: 1px solid var(--border-soft);
+            text-align: right;
+            white-space: nowrap;
+            color: var(--texto);
+        }
+        td.empresa { text-align: left; font-weight: 600; color: var(--texto); }
+        tr:hover td { background: rgba(96, 160, 128, .06); }
+        .gp { border-left: 1px solid #2A343C; }
+        .pos { color: var(--pos); font-weight: 600; }
+        .neg { color: var(--neg); font-weight: 600; }
+        .neutro { color: var(--muted); }
+        .lanc-antes { color: #7FB6EC; font-weight: 600; white-space: nowrap; }
+        .lanc-apos { color: var(--ambra); font-weight: 600; white-space: nowrap; }
+        .rodape {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: .06em;
+        }
+        @media (max-width: 760px) {
+            .masthead { flex-direction: column; text-align: center; padding: 36px 24px 30px; }
+            .mast-direita { order: -1; }
+            .logo { height: 96px; }
+            body { padding: 0 14px 30px; }
+        }
+        @media print {
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <header class="masthead">
+        <div>
+            
+            <h1 class="mast-titulo">Relatório de Previsões x Reais — 2T26 (17/08/2026)<span class="badge badge-real">Resultados divulgados</span></h1>
+            <p class="mast-sub">Comparação entre o previsto e o realizado. A variação é calculada sobre o valor previsto.</p>
+        </div>
+        <div class="mast-direita"><img class="logo" src="..\Logo.JPG" alt=""></div>
+    </header>
+    <table>
+        
+            <thead>
+                <tr>
+                    <th class="rotulo" rowspan="2">Empresa</th>
+                    <th class="grupo gp" colspan="3">Receita</th>
+                    <th class="grupo gp" colspan="3">EBITDA</th>
+                    <th class="grupo gp" colspan="3">Lucro</th>
+                    <th class="grupo gp" colspan="3">LPA</th>
+                </tr>
+                <tr>
+                    <th class="gp">Prevista</th><th>Real</th><th>Var.</th>
+                    <th class="gp">Previsto</th><th>Real</th><th>Var.</th>
+                    <th class="gp">Previsto</th><th>Real</th><th>Var.</th>
+                    <th class="gp">Previsto</th><th>Real</th><th>Var.</th>
+                </tr>
+            </thead>
+        
+        <tbody>
+            <tr><td class="empresa">AMAR3.SA</td><td class="gp">R$ 4,00</td><td>R$ 4,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 4,00</td><td>R$ 4,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 4,00</td><td>R$ 4,00</td><td><span class="neutro">0,00%</span></td><td class="gp">4,0000</td><td>4,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">AMBP3.SA</td><td class="gp">R$ 3,00</td><td>R$ 3,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 3,00</td><td>R$ 3,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 3,00</td><td>R$ 3,00</td><td><span class="neutro">0,00%</span></td><td class="gp">3,0000</td><td>3,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ARND3.SA</td><td class="gp">R$ 6,00</td><td>R$ 6,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 6,00</td><td>R$ 6,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 6,00</td><td>R$ 6,00</td><td><span class="neutro">0,00%</span></td><td class="gp">6,0000</td><td>6,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">DMVF3.SA</td><td class="gp">R$ 2,00</td><td>R$ 2,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 2,00</td><td>R$ 2,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 2,00</td><td>R$ 2,00</td><td><span class="neutro">0,00%</span></td><td class="gp">2,0000</td><td>2,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ECOM3.SA</td><td class="gp">R$ 8,00</td><td>R$ 8,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 8,00</td><td>R$ 8,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 8,00</td><td>R$ 8,00</td><td><span class="neutro">0,00%</span></td><td class="gp">8,0000</td><td>8,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">GFSA3.SA</td><td class="gp">R$ 9,00</td><td>R$ 9,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 9,00</td><td>R$ 9,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 9,00</td><td>R$ 9,00</td><td><span class="neutro">0,00%</span></td><td class="gp">9,0000</td><td>9,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">IFCM3.SA</td><td class="gp">R$ 7,00</td><td>R$ 7,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 7,00</td><td>R$ 7,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 7,00</td><td>R$ 7,00</td><td><span class="neutro">0,00%</span></td><td class="gp">7,0000</td><td>7,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">ITUB4.SA</td><td class="gp">R$ 38.900,00</td><td>R$ 41.200,00</td><td><span class="pos">+5,91%</span></td><td class="gp">R$ 16.200,00</td><td>R$ 17.100,00</td><td><span class="pos">+5,56%</span></td><td class="gp">R$ 9.500,00</td><td>R$ 10.300,00</td><td><span class="pos">+8,42%</span></td><td class="gp">1,0900</td><td>1,1800</td><td><span class="pos">+8,26%</span></td></tr><tr><td class="empresa">JBSS3.SA</td><td class="gp">R$ 31.000,00</td><td>R$ 32.450,00</td><td><span class="pos">+4,68%</span></td><td class="gp">R$ 7.200,00</td><td>R$ 7.410,00</td><td><span class="pos">+2,92%</span></td><td class="gp">R$ 3.100,00</td><td>R$ 3.340,00</td><td><span class="pos">+7,74%</span></td><td class="gp">1,9200</td><td>2,0600</td><td><span class="pos">+7,29%</span></td></tr><tr><td class="empresa">MEAL3.SA</td><td class="gp">R$ 5,00</td><td>R$ 5,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 5,00</td><td>R$ 5,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 5,00</td><td>R$ 5,00</td><td><span class="neutro">0,00%</span></td><td class="gp">5,0000</td><td>5,0000</td><td><span class="neutro">0,00%</span></td></tr><tr><td class="empresa">PETR4.SA</td><td class="gp">R$ 104.500,00</td><td>R$ 98.600,00</td><td><span class="neg">-5,65%</span></td><td class="gp">R$ 40.200,00</td><td>R$ 38.900,00</td><td><span class="neg">-3,23%</span></td><td class="gp">R$ 24.100,00</td><td>R$ 22.950,00</td><td><span class="neg">-4,77%</span></td><td class="gp">1,8500</td><td>1,7600</td><td><span class="neg">-4,86%</span></td></tr><tr><td class="empresa">SEQL3.SA</td><td class="gp">R$ 1,00</td><td>R$ 1,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 1,00</td><td>R$ 1,00</td><td><span class="neutro">0,00%</span></td><td class="gp">R$ 1,00</td><td>R$ 1,00</td><td><span class="neutro">0,00%</span></td><td class="gp">1,0000</td><td>1,0000</td><td><span class="neutro">0,00%</span></td></tr>
+        </tbody>
+    </table>
+    <p class="rodape">
+        <span>Gerado em 15/08/2026 às 19:27 · 14 empresa(s) · Página 1 de 2</span>
+    </p>
+</body>
+</html>
